@@ -1,3 +1,5 @@
+using Entidades;
+
 namespace UI
 {
     internal static class Program
@@ -12,6 +14,8 @@ namespace UI
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new FrmLogin());
+            
+            //Application.Run(new FrmMenuPrincipal(new Usuario("apellido","nombre",123,"nombre","asd",Roles.empleado), new FrmLogin()));
         }
     }
 }
