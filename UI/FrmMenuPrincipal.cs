@@ -13,19 +13,19 @@ namespace UI
 {
     public partial class FrmMenuPrincipal : Form
     {
-        Usuario usuarioLogueado;
-        FrmLogin frmLogin;
-        bool hayCambios = true;
+        private Usuario _usuarioLogueado;
+        private FrmLogin _frmLogin;
+        public bool hayCambios = false;
 
         public FrmMenuPrincipal(Usuario usuario, FrmLogin frmLogin)
         {
             InitializeComponent();
-            this.usuarioLogueado = usuario;
-            this.frmLogin = frmLogin;
+            this._usuarioLogueado = usuario;
+            this._frmLogin = frmLogin;
         }
         private void FrmMenuPrincipal_Load(object sender, EventArgs e)
         {
-            if (usuarioLogueado is not null && usuarioLogueado.Rol == Roles.superUsuario)
+            if (_usuarioLogueado is not null && _usuarioLogueado.Rol == Roles.superUsuario)
             {
                 btnUsuarios.Visible = true;
             }
@@ -38,7 +38,7 @@ namespace UI
         private void cerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GuardarCambiosAntesDeSalir();
-            frmLogin.Show();
+            _frmLogin.Show();
             Close();
         }
 
@@ -46,7 +46,7 @@ namespace UI
         {
             GuardarCambiosAntesDeSalir();
             Close();
-            frmLogin.Close();
+            _frmLogin.Close();
         }
 
         private void GuardarCambiosAntesDeSalir()
@@ -57,6 +57,7 @@ namespace UI
                 if (result == DialogResult.Yes)
                 {
                     Archivo.GuardarDatos(Usuario.pathRelativoUsuarios, Usuario.usuarios);
+                    Archivo.GuardarDatos(Producto.pathRelativoProductos, Producto.productos);
                 }
 
             }
@@ -78,7 +79,7 @@ namespace UI
 
         private void btnProductos_Click(object sender, EventArgs e)
         {
-            FrmProductos frmProductos = FrmProductos.InstanciarVentanaUnica();
+            FrmProductos frmProductos = FrmProductos.InstanciarVentanaUnica(this);
             frmProductos.MdiParent = this;
             frmProductos.Show();
             frmProductos.BringToFront();
@@ -86,11 +87,17 @@ namespace UI
 
         private void btnUsuarios_Click(object sender, EventArgs e)
         {
-            FrmUsuarios frmUsuarios = FrmUsuarios.InstanciarVentanaUnica();
+            FrmUsuarios frmUsuarios = FrmUsuarios.InstanciarVentanaUnica(this);
             frmUsuarios.MdiParent = this;
             frmUsuarios.Show();
             frmUsuarios.BringToFront();
         }
 
+        private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            hayCambios = false;
+            Archivo.GuardarDatos(Usuario.pathRelativoUsuarios, Usuario.usuarios);
+            Archivo.GuardarDatos(Producto.pathRelativoProductos, Producto.productos);
+        }
     }
 }

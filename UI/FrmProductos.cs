@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,17 +13,19 @@ using System.Windows.Forms;
 namespace UI
 {
     public partial class FrmProductos : Form
-    {
-        private static FrmProductos _instancia = null!            ;
-        public FrmProductos()
+    {       
+        private static FrmProductos _instancia = null!;
+        private FrmMenuPrincipal _frmMenuPrincipal = null!;
+        public FrmProductos(FrmMenuPrincipal frmMenuPrincipal)
         {
-            InitializeComponent();
+            this._frmMenuPrincipal = frmMenuPrincipal;
+            InitializeComponent();            
         }
-        public static FrmProductos InstanciarVentanaUnica()
+        public static FrmProductos InstanciarVentanaUnica(FrmMenuPrincipal frmMenuPrincipal)
         {
             if (_instancia is null)
             {
-                _instancia = new FrmProductos();
+                _instancia = new FrmProductos(frmMenuPrincipal);
             }
             return _instancia;            
         }

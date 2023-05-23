@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -68,12 +69,13 @@ namespace UI
             if (Mesa.listaMesas[0].EstaLibre())
             {
                 //ocupar, mostrar y agregar productos a la lista
-
+                //setear mesa (cantidad de personas 
 
                 ActualizarColorBoton(btnMesa1, EstadoMesa.ocupada);
             }
             else
             {
+                //mostrar opcion cobrar
                 //mostrar info de la mesa en datagrid o algo asi                
             }
         }

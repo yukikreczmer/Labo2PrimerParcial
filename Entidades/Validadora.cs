@@ -66,5 +66,97 @@ namespace Entidades
 
             return decimal.TryParse(numeroIngresado, out precioValidado);
         }
+
+        public static bool ValidarDatosUsuarioOrThrow(string apellido, string nombre, string dniString, string nombreUsuario, string contrasenia, string contraseniaRepetida, bool esSuperUsuario, out int dni, out Roles rol, out Usuario usuarioExistente) 
+        {
+            //if (!Validadora.ValidarNombre(apellido))
+            //{
+            //    throw new Exception("Apellido no valido");
+            //}
+            //if (!Validadora.ValidarNombre(nombre))
+            //{
+            //    throw new Exception("Nombre no valido");
+            //}
+            ValidarDatosUsuarioOrThrow(apellido, nombre, dniString, nombreUsuario, contrasenia, contraseniaRepetida, esSuperUsuario, out dni, out rol);
+            
+            if (Usuario.ExisteNombreUsuarioRegistrado(nombreUsuario))
+            {
+                throw new Exception("Nombre de Usuario ya registrado");
+            }
+            if (!Validadora.ValidarDni(dniString, out dni))
+            {
+                throw new Exception("DNI no valido");
+            }
+            if (Usuario.ExisteDniRegistrado(dni, out usuarioExistente))
+            {
+                throw new Exception($"DNI ya registrado con el nombre de usuario: {usuarioExistente.NombreUsuario}");
+            }
+            //if (Usuario.ExisteNombreUsuarioRegistrado(nombreUsuario))
+            //{
+            //    throw new Exception("Nombre de Usuario ya registrado");
+            //}
+            //if (nombreUsuario.Trim().Length < 5)
+            //{
+            //    throw new Exception("El nombre de usuario debe contener minimo 5 caracteres");
+            //}
+            //if (contrasenia.Length < 8)
+            //{
+            //    throw new Exception("La contraseña debe contener minimo 8 caracteres");
+            //}
+            //if (contrasenia != contraseniaRepetida)
+            //{
+            //    throw new Exception("Las contraseñas no coinciden");
+            //}
+
+            //if (esSuperUsuario)
+            //{
+            //    rol = Roles.superUsuario;
+            //}
+            //else
+            //{
+            //    rol = Roles.empleado;
+            //}
+
+            return true;
+        }
+        public static bool ValidarDatosUsuarioOrThrow(string apellido, string nombre, string dniString, string nombreUsuario, string contrasenia, string contraseniaRepetida, bool esSuperUsuario, out int dni, out Roles rol)
+        {
+            if (!Validadora.ValidarNombre(apellido))
+            {
+                throw new Exception("Apellido no valido");
+            }
+            if (!Validadora.ValidarNombre(nombre))
+            {
+                throw new Exception("Nombre no valido");
+            }
+            if (!Validadora.ValidarDni(dniString, out dni))
+            {
+                throw new Exception("DNI no valido");
+            }                        
+            if (nombreUsuario.Trim().Length < 5)
+            {
+                throw new Exception("El nombre de usuario debe contener minimo 5 caracteres");
+            }
+            if (contrasenia.Length < 8)
+            {
+                throw new Exception("La contraseña debe contener minimo 8 caracteres");
+            }
+            if (contrasenia != contraseniaRepetida)
+            {
+                throw new Exception("Las contraseñas no coinciden");
+            }
+
+            if (esSuperUsuario)
+            {
+                rol = Roles.superUsuario;
+            }
+            else
+            {
+                rol = Roles.empleado;
+            }
+           
+            return true;
+        }
+        
     }
 }

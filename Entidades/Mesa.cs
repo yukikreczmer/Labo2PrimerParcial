@@ -24,7 +24,7 @@ namespace Entidades
 
         public Mesa(int numeroDeMesa)
         {
-            this._numeroDeMesa = numeroDeMesa;            
+            NumeroDeMesa = numeroDeMesa;
             ListaPedidos = new List<Producto>();
         }
         public static void InicializarMesas()

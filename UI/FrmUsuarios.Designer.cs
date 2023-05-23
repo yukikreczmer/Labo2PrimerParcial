@@ -70,6 +70,7 @@
             this.btnModificarUsuario.TabIndex = 16;
             this.btnModificarUsuario.Text = "Modificar";
             this.btnModificarUsuario.UseVisualStyleBackColor = true;
+            this.btnModificarUsuario.Click += new System.EventHandler(this.btnModificarUsuario_Click);
             // 
             // btnBajarUsuario
             // 
@@ -79,6 +80,7 @@
             this.btnBajarUsuario.TabIndex = 15;
             this.btnBajarUsuario.Text = "Bajar";
             this.btnBajarUsuario.UseVisualStyleBackColor = true;
+            this.btnBajarUsuario.Click += new System.EventHandler(this.btnBajarUsuario_Click);
             // 
             // dgvUsuarios
             // 
@@ -88,6 +90,7 @@
             this.dgvUsuarios.RowTemplate.Height = 25;
             this.dgvUsuarios.Size = new System.Drawing.Size(656, 597);
             this.dgvUsuarios.TabIndex = 18;
+            this.dgvUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUsuarios_CellContentClick);
             // 
             // lblTituloUsuarios
             // 
@@ -118,7 +121,7 @@
             this.gpbDatosUsuario.Controls.Add(this.txbApellido);
             this.gpbDatosUsuario.Location = new System.Drawing.Point(996, 110);
             this.gpbDatosUsuario.Name = "gpbDatosUsuario";
-            this.gpbDatosUsuario.Size = new System.Drawing.Size(494, 378);
+            this.gpbDatosUsuario.Size = new System.Drawing.Size(533, 391);
             this.gpbDatosUsuario.TabIndex = 26;
             this.gpbDatosUsuario.TabStop = false;
             this.gpbDatosUsuario.Text = "Datos del Usuario";
@@ -127,7 +130,7 @@
             // 
             this.lblMensajeError.AutoSize = true;
             this.lblMensajeError.ForeColor = System.Drawing.Color.Red;
-            this.lblMensajeError.Location = new System.Drawing.Point(203, 321);
+            this.lblMensajeError.Location = new System.Drawing.Point(182, 321);
             this.lblMensajeError.Name = "lblMensajeError";
             this.lblMensajeError.Size = new System.Drawing.Size(32, 15);
             this.lblMensajeError.TabIndex = 13;
@@ -136,15 +139,16 @@
             // 
             // txbContraseniaRepetida
             // 
-            this.txbContraseniaRepetida.Location = new System.Drawing.Point(257, 255);
+            this.txbContraseniaRepetida.Location = new System.Drawing.Point(301, 257);
             this.txbContraseniaRepetida.Name = "txbContraseniaRepetida";
-            this.txbContraseniaRepetida.Size = new System.Drawing.Size(146, 23);
+            this.txbContraseniaRepetida.PasswordChar = '*';
+            this.txbContraseniaRepetida.Size = new System.Drawing.Size(185, 23);
             this.txbContraseniaRepetida.TabIndex = 12;
             // 
             // lblRepetirContraseña
             // 
             this.lblRepetirContraseña.AutoSize = true;
-            this.lblRepetirContraseña.Location = new System.Drawing.Point(257, 237);
+            this.lblRepetirContraseña.Location = new System.Drawing.Point(301, 239);
             this.lblRepetirContraseña.Name = "lblRepetirContraseña";
             this.lblRepetirContraseña.Size = new System.Drawing.Size(107, 15);
             this.lblRepetirContraseña.TabIndex = 11;
@@ -153,7 +157,7 @@
             // lblContrasenia
             // 
             this.lblContrasenia.AutoSize = true;
-            this.lblContrasenia.Location = new System.Drawing.Point(257, 175);
+            this.lblContrasenia.Location = new System.Drawing.Point(301, 177);
             this.lblContrasenia.Name = "lblContrasenia";
             this.lblContrasenia.Size = new System.Drawing.Size(67, 15);
             this.lblContrasenia.TabIndex = 10;
@@ -180,7 +184,7 @@
             // lblNombre
             // 
             this.lblNombre.AutoSize = true;
-            this.lblNombre.Location = new System.Drawing.Point(257, 45);
+            this.lblNombre.Location = new System.Drawing.Point(301, 47);
             this.lblNombre.Name = "lblNombre";
             this.lblNombre.Size = new System.Drawing.Size(51, 15);
             this.lblNombre.TabIndex = 7;
@@ -207,37 +211,38 @@
             // 
             // txbContrasenia
             // 
-            this.txbContrasenia.Location = new System.Drawing.Point(257, 195);
+            this.txbContrasenia.Location = new System.Drawing.Point(301, 197);
             this.txbContrasenia.Name = "txbContrasenia";
-            this.txbContrasenia.Size = new System.Drawing.Size(146, 23);
+            this.txbContrasenia.PasswordChar = '*';
+            this.txbContrasenia.Size = new System.Drawing.Size(185, 23);
             this.txbContrasenia.TabIndex = 4;
             // 
             // txbNombreUsuario
             // 
             this.txbNombreUsuario.Location = new System.Drawing.Point(37, 195);
             this.txbNombreUsuario.Name = "txbNombreUsuario";
-            this.txbNombreUsuario.Size = new System.Drawing.Size(146, 23);
+            this.txbNombreUsuario.Size = new System.Drawing.Size(179, 23);
             this.txbNombreUsuario.TabIndex = 3;
             // 
             // txbDni
             // 
             this.txbDni.Location = new System.Drawing.Point(37, 122);
             this.txbDni.Name = "txbDni";
-            this.txbDni.Size = new System.Drawing.Size(119, 23);
+            this.txbDni.Size = new System.Drawing.Size(152, 23);
             this.txbDni.TabIndex = 2;
             // 
             // txbNombre
             // 
-            this.txbNombre.Location = new System.Drawing.Point(257, 63);
+            this.txbNombre.Location = new System.Drawing.Point(301, 65);
             this.txbNombre.Name = "txbNombre";
-            this.txbNombre.Size = new System.Drawing.Size(119, 23);
+            this.txbNombre.Size = new System.Drawing.Size(158, 23);
             this.txbNombre.TabIndex = 1;
             // 
             // txbApellido
             // 
             this.txbApellido.Location = new System.Drawing.Point(37, 65);
             this.txbApellido.Name = "txbApellido";
-            this.txbApellido.Size = new System.Drawing.Size(119, 23);
+            this.txbApellido.Size = new System.Drawing.Size(152, 23);
             this.txbApellido.TabIndex = 0;
             // 
             // FrmUsuarios

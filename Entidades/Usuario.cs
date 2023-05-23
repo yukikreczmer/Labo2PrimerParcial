@@ -81,54 +81,32 @@ namespace Entidades
         {
             int dni;
             Roles rol;
-
-            if(!Validadora.ValidarNombre(apellido))
-            {
-                throw new Exception("Apellido no valido");
-            }
-            if(!Validadora.ValidarNombre(nombre))
-            {
-                throw new Exception("Nombre no valido");
-            }
-            if(!Validadora.ValidarDni(dniString, out dni))
-            {
-                throw new Exception("DNI no valido");
-            }
-            if(ExisteDniRegistrado(dni))
-            {
-                throw new Exception("DNI ya registrado");
-            }
-            if(ExisteNombreUsuarioRegistrado(nombreUsuario))
-            {
-                throw new Exception("Nombre de Usuario ya registrado");
-            }
-            if(nombreUsuario.Trim().Length < 5)
-            {
-                throw new Exception("El nombre de usuario debe contener minimo 5 caracteres");
-            }
-            if(contrasenia.Length < 8)
-            {
-                throw new Exception("La contraseña debe contener minimo 8 caracteres");
-            }
-            if(contrasenia != contraseniaRepetida)
-            {
-                throw new Exception("Las contraseñas no coinciden");            
-            }            
-
-            if(esSuperUsuario)
-            {
-                rol = Roles.superUsuario;
-            }
-            else
-            {
-                rol = Roles.empleado;
-            }
+            Usuario usuarioExistente = null!;
+            Validadora.ValidarDatosUsuarioOrThrow(apellido, nombre, dniString, nombreUsuario, contrasenia, contraseniaRepetida, esSuperUsuario, out dni, out rol, out usuarioExistente);
 
             Usuario usuario = new Usuario(apellido, nombre, dni, nombreUsuario, contrasenia, rol);
             usuarios.Add(usuario);
             return usuario;
-            
+
         }
+        public void ModificarUsuario(string apellido, string nombre, int dni, string nombreUsuario, string contrasenia, Roles rol)
+        {
+            if(ChequearContrasenia(contrasenia))
+            {
+                Apellido = apellido;
+                Nombre = nombre;
+                Dni = dni;
+                NombreUsuario = nombreUsuario;        
+                _contrasenia = contrasenia;
+                Rol = rol;
+            }
+            else
+            {
+                throw new Exception("Introduzca la contraseña original para efectuar los cambios");
+            }
+        }
+
+        
 
         public static explicit operator Usuario (string linea)
         {       
@@ -160,17 +138,30 @@ namespace Entidades
             }
             return false;
         }
-        public static bool ExisteDniRegistrado(int dni)
+        public static bool ExisteDniRegistrado(int dni, out Usuario usuario)
         {
             foreach (Usuario item in usuarios)
             {
                 if (item.Dni == dni)
                 {
+                    usuario = item;
                     return true;
                 }
             }
+            usuario = null!;
             return false;
         }
 
+        public static void BajarUsuario(Usuario usuarioABajar)
+        {
+            foreach (Parser item in usuarios)
+            {
+                if (item.Equals(usuarioABajar))
+                {
+                    usuarios.Remove(item);
+                    break;
+                }
+            }
+        }
     }
 }
