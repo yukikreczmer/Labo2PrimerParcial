@@ -13,7 +13,14 @@ namespace UI
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
-            Negocio.CargarUsuarios();
+            try
+            {
+                Usuario.CargarUsuarios();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)
@@ -23,7 +30,7 @@ namespace UI
                 Usuario usuarioIngresado;
                 if(!string.IsNullOrEmpty(txtUsuario.Text) && !string.IsNullOrEmpty(txtContraseña.Text))
                 {
-                    usuarioIngresado = Negocio.LoguearUsuario(txtUsuario.Text, txtContraseña.Text);
+                    usuarioIngresado = Usuario.LoguearUsuario(txtUsuario.Text, txtContraseña.Text);
                     FrmMenuPrincipal frmMenuPrincipal = new FrmMenuPrincipal(usuarioIngresado, this);
                     VaciarTextBoxes();
                     Hide();                    

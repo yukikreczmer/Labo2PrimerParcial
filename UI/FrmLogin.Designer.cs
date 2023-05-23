@@ -59,9 +59,11 @@
             // btnIngresar
             // 
             this.btnIngresar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnIngresar.Font = new System.Drawing.Font("Yu Gothic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnIngresar.ForeColor = System.Drawing.SystemColors.MenuHighlight;
             this.btnIngresar.Location = new System.Drawing.Point(124, 413);
             this.btnIngresar.Name = "btnIngresar";
-            this.btnIngresar.Size = new System.Drawing.Size(131, 40);
+            this.btnIngresar.Size = new System.Drawing.Size(144, 40);
             this.btnIngresar.TabIndex = 0;
             this.btnIngresar.Text = "Ingresar";
             this.btnIngresar.UseVisualStyleBackColor = true;
@@ -82,9 +84,11 @@
             // btnAutocompletar
             // 
             this.btnAutocompletar.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnAutocompletar.Location = new System.Drawing.Point(137, 359);
+            this.btnAutocompletar.Font = new System.Drawing.Font("Yu Gothic", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAutocompletar.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btnAutocompletar.Location = new System.Drawing.Point(137, 362);
             this.btnAutocompletar.Name = "btnAutocompletar";
-            this.btnAutocompletar.Size = new System.Drawing.Size(105, 26);
+            this.btnAutocompletar.Size = new System.Drawing.Size(118, 26);
             this.btnAutocompletar.TabIndex = 5;
             this.btnAutocompletar.Text = "Autocompletar";
             this.btnAutocompletar.UseVisualStyleBackColor = true;
@@ -94,6 +98,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::UI.Properties.Resources.FondoComida2;
             this.ClientSize = new System.Drawing.Size(388, 521);
             this.Controls.Add(this.btnAutocompletar);
             this.Controls.Add(this.lblErrorUsuario);
