@@ -77,7 +77,7 @@ namespace Entidades
             return listaUsuarios;
         }
 
-        public static Usuario AgregarUsuario(string apellido, string nombre, string dniString, string nombreUsuario, string contrasenia, string contraseniaRepetida, bool esSuperUsuario)
+        public static void AgregarUsuario(string apellido, string nombre, string dniString, string nombreUsuario, string contrasenia, string contraseniaRepetida, bool esSuperUsuario)
         {
             int dni;
             Roles rol;
@@ -85,9 +85,7 @@ namespace Entidades
             Validadora.ValidarDatosUsuarioOrThrow(apellido, nombre, dniString, nombreUsuario, contrasenia, contraseniaRepetida, esSuperUsuario, out dni, out rol, out usuarioExistente);
 
             Usuario usuario = new Usuario(apellido, nombre, dni, nombreUsuario, contrasenia, rol);
-            usuarios.Add(usuario);
-            return usuario;
-
+            usuarios.Add(usuario);            
         }
         public void ModificarUsuario(string apellido, string nombre, int dni, string nombreUsuario, string contrasenia, Roles rol)
         {

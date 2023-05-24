@@ -11,16 +11,14 @@ namespace Entidades
         public static List<Mesa> listaMesas = new List<Mesa>();
         public static int cantidadMesas = 6;
 
-        private EstadoMesa _estado;
-        private int _cantidadClientes;
+        private EstadoMesa _estado;       
         private int _numeroDeMesa;
-        private List<Producto>? _listaPedidos;
+        private List<Producto>? _listaPedidos;        
         
 
-        public EstadoMesa Estado { get => _estado; set => _estado = value; }
-        public int CantidadClientes { get => _cantidadClientes; set => _cantidadClientes = value; }
-        internal List<Producto>? ListaPedidos { get => _listaPedidos; set => _listaPedidos = value; }
-        public int NumeroDeMesa { get => _numeroDeMesa; set => _numeroDeMesa = value; }
+        public EstadoMesa Estado { get => _estado; set => _estado = value; }        
+        public List<Producto>? ListaPedidos { get => _listaPedidos; set => _listaPedidos = value; }
+        public int NumeroDeMesa { get => _numeroDeMesa; set => _numeroDeMesa = value; }        
 
         public Mesa(int numeroDeMesa)
         {
@@ -39,6 +37,39 @@ namespace Entidades
         public bool EstaLibre()
         {
             return Estado == EstadoMesa.libre;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine($"Numero de mesa: {NumeroDeMesa}");
+            sb.AppendLine($"Pedidos:");
+            sb.AppendLine("Producto: \t Precio:");
+            foreach(Producto item in ListaPedidos!)
+            {
+                sb.AppendLine(item.ToString());
+            }
+            sb.AppendLine("");
+            sb.AppendLine("TOTAL:");
+            sb.AppendLine($"{CalcularMontoAPagar()}");
+
+
+            return sb.ToString();
+        }
+        public decimal CalcularMontoAPagar()
+        {
+            decimal montoAPagar = 0;
+            foreach(Producto item in ListaPedidos!)
+            {
+                montoAPagar += item.Precio;
+            }
+            return montoAPagar;
+        }
+        public void LimpiarMesa()
+        {
+            ListaPedidos!.Clear();            
+            Estado = EstadoMesa.libre;
         }
 
     }

@@ -58,8 +58,8 @@ namespace UI
 
         private void btnAutocompletar_Click(object sender, EventArgs e)
         {
-            txtUsuario.Text = "mauromauro";
-            txtContraseña.Text = "asd123";
+            txtUsuario.Text = "supermario";
+            txtContraseña.Text = "rampi";
         }
     }
 }
