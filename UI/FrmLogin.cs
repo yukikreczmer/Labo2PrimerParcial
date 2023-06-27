@@ -15,7 +15,8 @@ namespace UI
         {
             try
             {
-                Usuario.CargarUsuarios();
+                //Usuario.CargarUsuarios();
+
             }
             catch (Exception ex)
             {
@@ -59,7 +60,7 @@ namespace UI
         private void btnAutocompletar_Click(object sender, EventArgs e)
         {
             txtUsuario.Text = "supermario";
-            txtContraseña.Text = "rampi";
+            txtContraseña.Text = "rampi123";
         }
     }
 }

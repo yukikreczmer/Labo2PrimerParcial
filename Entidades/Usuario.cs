@@ -31,8 +31,8 @@ namespace Entidades
             Nombre = _nombre!;
             Dni = _dni;
             NombreUsuario = _nombreUsuario!;
-            this._contrasenia = _contrasenia;
             Rol = _rol;
+            this._contrasenia = _contrasenia;
         }
 
         private bool ChequearContrasenia(string contrasenia)
@@ -56,9 +56,13 @@ namespace Entidades
         }
 
 
-        public override string ParsearDatoAGuardar()        
+        public override string ParsearDatoAGuardarArchivos()        
         {           
             return $"{Apellido}-{Nombre}-{Dni}-{NombreUsuario}-{Rol}-{_contrasenia}";
+        }
+        public override string ParsearDatoAGuardarDB()
+        {
+            return $"usuarios (apellido, nombre, dni, nombreUsuario, rol, contrasenia) VALUES('{Apellido}', '{Nombre}', '{Dni}', '{NombreUsuario}', '{Rol}', '{_contrasenia}')";
         }
 
         public static void CargarUsuarios()

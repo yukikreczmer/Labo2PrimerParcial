@@ -49,7 +49,7 @@ namespace Entidades
             StreamWriter streamWriter = new StreamWriter(archivoDestino, false);
             foreach(Parser item in datosAGuardar)
             {
-                streamWriter.WriteLine(item.ParsearDatoAGuardar());
+                streamWriter.WriteLine(item.ParsearDatoAGuardarArchivos());
             }
             streamWriter.Close();
             streamWriter.Dispose();            

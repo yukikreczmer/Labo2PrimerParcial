@@ -12,7 +12,9 @@ namespace Entidades
         /// Convierte los datos del objeto de tipo Parser a string, separados por un guion '-'
         /// </summary>
         /// <returns></returns> retorna string de los datos del objeto
-        public abstract string ParsearDatoAGuardar();
+        public abstract string ParsearDatoAGuardarArchivos();
+
+        public abstract string ParsearDatoAGuardarDB();
 
         /// <summary>
         /// Convierte cada linea de la lista de strings que se pasa por parametros, en usuarios y los agrega a la lista parser de usuarios
@@ -30,6 +32,8 @@ namespace Entidades
                 }
             }            
         }
+
+
         /// <summary>
         /// Convierte cada linea de la lista de strings que se pasa por parametros, en productos y los agrega a la lista parser de productos
         /// </summary>

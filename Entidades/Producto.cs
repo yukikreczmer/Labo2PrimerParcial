@@ -38,9 +38,13 @@ namespace Entidades
             return _idStatic;
         }
 
-        public override string ParsearDatoAGuardar()
+        public override string ParsearDatoAGuardarArchivos()
         {
             return $"{Nombre}-{Precio}-{Id}-{Stock}";
+        }
+        public override string ParsearDatoAGuardarDB()
+        {
+            return $"productos (nombre, precio, id, stock) VALUES('{Nombre}', '{Precio}', '{Id}', '{Stock}')";
         }
 
         public static void CargarProductos()
@@ -196,5 +200,7 @@ namespace Entidades
                 }
             }
         }
+
+
     }
 }
