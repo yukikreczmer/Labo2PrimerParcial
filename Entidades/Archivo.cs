@@ -53,6 +53,14 @@ namespace Entidades
             }
             streamWriter.Close();
             streamWriter.Dispose();            
+        }   
+        public static void GuardarDatos(string archivoDestino, string datoAGuardar)
+        {                                    
+            StreamWriter streamWriter = new StreamWriter(archivoDestino, true);
+
+            streamWriter.WriteLine(datoAGuardar);
+            streamWriter.Close();
+            streamWriter.Dispose();            
         }            
 
     }

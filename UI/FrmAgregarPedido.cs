@@ -58,7 +58,7 @@ namespace UI
         {
             Producto productoSeleccionado;
             int idProducto;
-            int.TryParse(dgvOrigenASeleccionar[3, posicion].Value.ToString(), out idProducto);
+            int.TryParse(dgvOrigenASeleccionar[2, posicion].Value.ToString(), out idProducto);
             productoSeleccionado = Producto.GetProductoByIdOrThrow(idProducto);
             return productoSeleccionado;
         }

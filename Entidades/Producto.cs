@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Entidades
 {
-    public class Producto : Parser
+    public class Producto : Parser, IInformableLog
     {
         public static List<Parser> productos = new List<Parser>();
         public static string pathRelativoProductos = "productos.txt";
@@ -12,14 +12,14 @@ namespace Entidades
 
         private string? _nombre;
         private decimal _precio;
-        private int _stock;
         private int _id;
+        private int _stock;
 
 
         public string? Nombre { get => _nombre; set => _nombre = value; }
         public decimal Precio { get => _precio; set => _precio = value; }
-        public int Stock { get => _stock; set => _stock = value; }
         public int Id { get => _id; set => _id = value; }
+        public int Stock { get => _stock; set => _stock = value; }
 
         public Producto(string? nombre, decimal precio, int stock)
         {
@@ -27,10 +27,13 @@ namespace Entidades
             Precio = precio;
             Id = CrearId();
             Stock = stock;
+            Log.instanciaLog.HuboCambios += RegistrarCambio;
         }
         public Producto(string? nombre, decimal precio, int id, int stock) : this(nombre, precio, stock)
         {
             Id = id;
+            if(_idStatic < id)
+                _idStatic = id;
         }
         private static int CrearId()
         {
@@ -153,35 +156,37 @@ namespace Entidades
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine($"{Nombre} \t {Precio}");
+            sb.AppendLine($"{Nombre} \t ${Precio}");
 
             return sb.ToString();
         }
 
-        public static void AgregarProducto(string nombre, string precioIngresado, string stockIngresado)
+        public static Producto AgregarProducto(string nombre, string precioIngresado, string stockIngresado)
         {
             decimal precio;
             int stock;
-            if (Validadora.ValidarNombre(nombre) && Validadora.ValidarPrecio(precioIngresado, out precio) && int.TryParse(stockIngresado, out stock))
+            if (Validadora.ValidarNombreProducto(nombre) && Validadora.ValidarPrecio(precioIngresado, out precio) && int.TryParse(stockIngresado, out stock))
             {
                 Producto productoAAgregar = new Producto(nombre, precio, stock);
                 productos.Add(productoAAgregar);
+                return productoAAgregar;
             }
             else
             {
                 throw new Exception("Error en los datos a ingresar");
             }
-
+            
         }
+
         public void ModificarProducto(string nombre, string precioIngresado, string stockIngresado)
         {
             decimal precioAModificar;
             int stockAModificar;
-            if (Validadora.ValidarNombre(nombre) && Validadora.ValidarPrecio(precioIngresado, out precioAModificar) && int.TryParse(stockIngresado, out stockAModificar))
-            {                
+            if (Validadora.ValidarNombreProducto(nombre) && Validadora.ValidarPrecio(precioIngresado, out precioAModificar) && int.TryParse(stockIngresado, out stockAModificar))
+            {
                 Nombre = nombre;
                 Precio = precioAModificar;
-                Stock = stockAModificar;                
+                Stock = stockAModificar;
             }
             else
             {
@@ -191,16 +196,39 @@ namespace Entidades
 
         public static void BajarProducto(Producto productoABajar)
         {
-            foreach(Producto item in productos)
+            Producto productoAEliminar = null;
+            foreach (Producto item in productos)
             {
-                if(item.Equals(productoABajar))
+                if (item.Equals(productoABajar))
                 {
+                    productoAEliminar = item;
                     productos.Remove(productoABajar);
+
                     break;
                 }
             }
         }
 
+        private string PrepararCambioAInformar(string usuarioModificador, string AclaracionABM)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(DateTime.Now.ToString());
+            sb.AppendLine(usuarioModificador);
+            sb.AppendLine(AclaracionABM);
+            sb.AppendLine(this.ToString() + $"ID: {Id} \t Stock: {Stock}");
+            sb.AppendLine();
+
+            return sb.ToString();
+        }
+
+        public void RegistrarCambio(IInformableLog informableSender, string usuarioModificador, string aclaracionABMoVenta)
+        {
+            if (informableSender == this)
+            {
+                string cambioAInformar = PrepararCambioAInformar(usuarioModificador, aclaracionABMoVenta);
+                Archivo.GuardarDatos(IInformableLog.FileName, cambioAInformar);
+            }
+        }
 
     }
 }

@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Authentication.ExtendedProtection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Entidades
 {
-    public class Usuario : Parser
+    public class Usuario : Parser, IInformableLog
     {
         public static List<Parser> usuarios = new List<Parser>();
         public static string pathRelativoUsuarios = "usuarios.txt";
@@ -33,6 +35,7 @@ namespace Entidades
             NombreUsuario = _nombreUsuario!;
             Rol = _rol;
             this._contrasenia = _contrasenia;
+            Log.instanciaLog.HuboCambios += RegistrarCambio;
         }
 
         private bool ChequearContrasenia(string contrasenia)
@@ -81,7 +84,7 @@ namespace Entidades
             return listaUsuarios;
         }
 
-        public static void AgregarUsuario(string apellido, string nombre, string dniString, string nombreUsuario, string contrasenia, string contraseniaRepetida, bool esSuperUsuario)
+        public static Usuario AgregarUsuario(string apellido, string nombre, string dniString, string nombreUsuario, string contrasenia, string contraseniaRepetida, bool esSuperUsuario)
         {
             int dni;
             Roles rol;
@@ -89,7 +92,8 @@ namespace Entidades
             Validadora.ValidarDatosUsuarioOrThrow(apellido, nombre, dniString, nombreUsuario, contrasenia, contraseniaRepetida, esSuperUsuario, out dni, out rol, out usuarioExistente);
 
             Usuario usuario = new Usuario(apellido, nombre, dni, nombreUsuario, contrasenia, rol);
-            usuarios.Add(usuario);            
+            usuarios.Add(usuario);   
+            return usuario;
         }
         public void ModificarUsuario(string apellido, string nombre, int dni, string nombreUsuario, string contrasenia, Roles rol)
         {
@@ -163,6 +167,38 @@ namespace Entidades
                     usuarios.Remove(item);
                     break;
                 }
+            }
+        }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine($"Apellido: {Apellido}");
+            sb.AppendLine($"Nombre: {Nombre}");
+            sb.AppendLine($"DNI: {Dni}");
+            sb.AppendLine($"Nombre de Usuario: {NombreUsuario}");
+            sb.AppendLine($"Rol: {Rol}");
+
+            return sb.ToString();
+        }
+
+        private string PrepararCambioAInformar(string usuarioModificador, string AclaracionABM)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(DateTime.Now.ToString());
+            sb.AppendLine(usuarioModificador);
+            sb.AppendLine(AclaracionABM);
+            sb.AppendLine(this.ToString());
+            sb.AppendLine();
+
+            return sb.ToString();
+        }
+
+        public void RegistrarCambio(IInformableLog informableSender, string usuarioModificador, string aclaracionABMoVenta)
+        {
+            if (informableSender == this)
+            {
+                string cambioAInformar = PrepararCambioAInformar(usuarioModificador, aclaracionABMoVenta);
+                Archivo.GuardarDatos(IInformableLog.FileName, cambioAInformar);
             }
         }
     }

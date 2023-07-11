@@ -17,4 +17,8 @@ namespace Entidades
         libre,
         reservada
     }
+    public enum ConnectionStrings
+    {
+        local
+    }    
 }

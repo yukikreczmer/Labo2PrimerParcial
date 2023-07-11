@@ -1,4 +1,5 @@
 ﻿using Entidades;
+using Entidades.SQL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,17 +16,19 @@ namespace UI
 {
     public partial class FrmHome : Form
     {
-        private static FrmHome _instancia = null!;        
+        private static FrmHome _instancia = null!;
+        private FrmMenuPrincipal _frmMenuPrincipal = null!;        
 
-        public FrmHome()
+        public FrmHome(FrmMenuPrincipal frmMenuPrincipal)
         {
             InitializeComponent();
+            _frmMenuPrincipal = frmMenuPrincipal;
         }
-        public static FrmHome InstanciarVentanaUnica()
+        public static FrmHome InstanciarVentanaUnica(FrmMenuPrincipal frmMenuPrincipal)
         {
             if(_instancia is null)
             {
-                _instancia = new FrmHome();
+                _instancia = new FrmHome(frmMenuPrincipal);
             }
             return _instancia;
         }
@@ -39,7 +43,16 @@ namespace UI
             ActualizarColorBoton(btnMesa4, Mesa.listaMesas[3].Estado);
             ActualizarColorBoton(btnMesa5, Mesa.listaMesas[4].Estado);
             ActualizarColorBoton(btnMesa6, Mesa.listaMesas[5].Estado);
-            Producto.CargarProductos();
+            //Producto.CargarProductos();
+            try
+            {
+                ProductoDB ProductoDB = new ProductoDB(ConnectionStrings.local.ToString());
+                Producto.productos = ProductoDB.TraerListaParser();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }           
         }
 
         private void ActualizarColorBoton(Button btn, EstadoMesa estado)
@@ -233,13 +246,16 @@ namespace UI
             rtbListaPedidosMesa.Text = mesaAtendida.ToString();
             mesaAtendida.Estado = EstadoMesa.ocupada;
             ActualizarColorBoton(botonMesa, EstadoMesa.ocupada);
-        }       
+        }
 
         private void btnCobrarMesa1_Click(object sender, EventArgs e)
         {
             Mesa mesa1 = Mesa.listaMesas[0];
             MessageBox.Show($"Se cobraron {mesa1.CalcularMontoAPagar()}");
             btnCobrarMesa1.Visible = false;
+
+            _frmMenuPrincipal.logInformes.InformarEnLog(mesa1 , _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnCobrarMesa1.Text);
+
             mesa1.LimpiarMesa();
             ActualizarColorBoton(btnMesa1 , EstadoMesa.libre);
             rtbListaPedidosMesa.Text = mesa1.ToString();
@@ -250,6 +266,9 @@ namespace UI
             Mesa mesa2 = Mesa.listaMesas[1];
             MessageBox.Show($"Se cobraron {mesa2.CalcularMontoAPagar()}");
             btnCobrarMesa2.Visible = false;
+            
+            _frmMenuPrincipal.logInformes.InformarEnLog(mesa2, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnCobrarMesa2.Text);
+            
             mesa2.LimpiarMesa();
             ActualizarColorBoton(btnMesa2, EstadoMesa.libre);
             rtbListaPedidosMesa.Text = mesa2.ToString();
@@ -260,6 +279,9 @@ namespace UI
             Mesa mesa3 = Mesa.listaMesas[2];
             MessageBox.Show($"Se cobraron {mesa3.CalcularMontoAPagar()}");
             btnCobrarMesa3.Visible = false;
+            
+            _frmMenuPrincipal.logInformes.InformarEnLog(mesa3, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnCobrarMesa3.Text);
+            
             mesa3.LimpiarMesa();
             ActualizarColorBoton(btnMesa3, EstadoMesa.libre);
             rtbListaPedidosMesa.Text = mesa3.ToString();
@@ -270,6 +292,9 @@ namespace UI
             Mesa mesa4 = Mesa.listaMesas[3];
             MessageBox.Show($"Se cobraron {mesa4.CalcularMontoAPagar()}");
             btnCobrarMesa4.Visible = false;
+            
+            _frmMenuPrincipal.logInformes.InformarEnLog(mesa4, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnCobrarMesa4.Text);
+            
             mesa4.LimpiarMesa();
             ActualizarColorBoton(btnMesa4, EstadoMesa.libre);
             rtbListaPedidosMesa.Text = mesa4.ToString();
@@ -280,6 +305,9 @@ namespace UI
             Mesa mesa5 = Mesa.listaMesas[4];
             MessageBox.Show($"Se cobraron {mesa5.CalcularMontoAPagar()}");
             btnCobrarMesa5.Visible = false;
+            
+            _frmMenuPrincipal.logInformes.InformarEnLog(mesa5, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnCobrarMesa5.Text);
+            
             mesa5.LimpiarMesa();
             ActualizarColorBoton(btnMesa5, EstadoMesa.libre);
             rtbListaPedidosMesa.Text = mesa5.ToString();
@@ -290,6 +318,9 @@ namespace UI
             Mesa mesa6 = Mesa.listaMesas[5];
             MessageBox.Show($"Se cobraron {mesa6.CalcularMontoAPagar()}");
             btnCobrarMesa6.Visible = false;
+            
+            _frmMenuPrincipal.logInformes.InformarEnLog(mesa6, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnCobrarMesa6.Text);
+            
             mesa6.LimpiarMesa();
             ActualizarColorBoton(btnMesa6, EstadoMesa.libre);
             rtbListaPedidosMesa.Text = mesa6.ToString();

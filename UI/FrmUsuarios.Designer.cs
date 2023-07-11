@@ -58,7 +58,7 @@
             this.btnAgregarUsuario.Name = "btnAgregarUsuario";
             this.btnAgregarUsuario.Size = new System.Drawing.Size(126, 48);
             this.btnAgregarUsuario.TabIndex = 17;
-            this.btnAgregarUsuario.Text = "Agregar";
+            this.btnAgregarUsuario.Text = "Agregar Usuario";
             this.btnAgregarUsuario.UseVisualStyleBackColor = true;
             this.btnAgregarUsuario.Click += new System.EventHandler(this.btnAgregarUsuario_Click);
             // 
@@ -68,7 +68,7 @@
             this.btnModificarUsuario.Name = "btnModificarUsuario";
             this.btnModificarUsuario.Size = new System.Drawing.Size(126, 48);
             this.btnModificarUsuario.TabIndex = 16;
-            this.btnModificarUsuario.Text = "Modificar";
+            this.btnModificarUsuario.Text = "Modificar Usuario";
             this.btnModificarUsuario.UseVisualStyleBackColor = true;
             this.btnModificarUsuario.Click += new System.EventHandler(this.btnModificarUsuario_Click);
             // 
@@ -78,7 +78,7 @@
             this.btnBajarUsuario.Name = "btnBajarUsuario";
             this.btnBajarUsuario.Size = new System.Drawing.Size(126, 48);
             this.btnBajarUsuario.TabIndex = 15;
-            this.btnBajarUsuario.Text = "Bajar";
+            this.btnBajarUsuario.Text = "Bajar Usuario";
             this.btnBajarUsuario.UseVisualStyleBackColor = true;
             this.btnBajarUsuario.Click += new System.EventHandler(this.btnBajarUsuario_Click);
             // 

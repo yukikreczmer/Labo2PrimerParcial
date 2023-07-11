@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    public class Mesa
+    public class Mesa : IInformableLog
     {
         public static List<Mesa> listaMesas = new List<Mesa>();
         public static int cantidadMesas = 6;
@@ -24,6 +24,7 @@ namespace Entidades
         {
             NumeroDeMesa = numeroDeMesa;
             ListaPedidos = new List<Producto>();
+            Log.instanciaLog.HuboCambios += RegistrarCambio;
         }
         public static void InicializarMesas()
         {
@@ -71,6 +72,28 @@ namespace Entidades
             ListaPedidos!.Clear();            
             Estado = EstadoMesa.libre;
         }
+        private string PrepararCambioAInformar(string usuarioModificador, string aclaracionABMoVenta)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(DateTime.Now.ToString());
+            sb.AppendLine(usuarioModificador);
+            sb.AppendLine(aclaracionABMoVenta);
+            sb.AppendLine(this.ToString());
+            sb.AppendLine();
+
+            return sb.ToString();
+        }
+
+        public void RegistrarCambio(IInformableLog informableSender, string usuarioModificador, string aclaracionABMoVenta)
+        {
+            if(informableSender == this)
+            {
+                string cambioAInformar = PrepararCambioAInformar(usuarioModificador, aclaracionABMoVenta);
+                Archivo.GuardarDatos(IInformableLog.FileName, cambioAInformar);            
+            }
+        }
+
+
 
     }
 }

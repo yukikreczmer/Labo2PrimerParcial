@@ -36,6 +36,17 @@ namespace Entidades
             textoAValidar.Trim();
 
             return true;
+        }        
+        public static bool ValidarNombreProducto(string textoAValidar)
+        {      
+            if(string.IsNullOrEmpty(textoAValidar.Trim()))
+            {
+                return false;
+            }
+
+            textoAValidar.Trim();
+
+            return true;
         }
 
         public static bool ValidarPrecio(string numeroIngresado, out decimal precioValidado)

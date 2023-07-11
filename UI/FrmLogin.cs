@@ -13,15 +13,16 @@ namespace UI
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
+            /*
             try
             {
-                //Usuario.CargarUsuarios();
+                Usuario.CargarUsuarios();
 
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
+            }*/
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)

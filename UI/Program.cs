@@ -10,12 +10,22 @@ namespace UI
         /// </summary>
         [STAThread]
         static async Task Main(string[] args)
-        {            
-            Conexion.Leer();                        
+        {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
+
+            try
+            {
+                UsuarioDB usuarioDB = new UsuarioDB(ConnectionStrings.local.ToString());
+                Usuario.usuarios = usuarioDB.TraerListaParser();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
             ApplicationConfiguration.Initialize();
-            Application.Run(new FrmLogin());                        
+            Application.Run(new FrmLogin());
         }
     }
 }

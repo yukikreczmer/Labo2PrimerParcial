@@ -16,6 +16,9 @@ namespace UI
         private Usuario _usuarioLogueado;
         private FrmLogin _frmLogin;
         public bool hayCambios = false;
+        public Log logInformes;
+
+        public Usuario UsuarioLogueado { get => _usuarioLogueado;}
 
         public FrmMenuPrincipal(Usuario usuario, FrmLogin frmLogin)
         {
@@ -25,14 +28,15 @@ namespace UI
         }
         private void FrmMenuPrincipal_Load(object sender, EventArgs e)
         {
-            if (_usuarioLogueado is not null && _usuarioLogueado.Rol == Roles.superUsuario)
+            if (UsuarioLogueado is not null && UsuarioLogueado.Rol == Roles.superUsuario)
             {
                 btnUsuarios.Visible = true;
             }
-            FrmHome frmHome = FrmHome.InstanciarVentanaUnica();
+            FrmHome frmHome = FrmHome.InstanciarVentanaUnica(this);
             frmHome.MdiParent = this;
             frmHome.Show();
             frmHome.BringToFront();
+            logInformes = Log.instanciaLog;
         }
 
         private void cerrarSesiónToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,7 +69,7 @@ namespace UI
 
         private void btnHome_Click(object sender, EventArgs e)
         {
-            FrmHome frmHome = FrmHome.InstanciarVentanaUnica();
+            FrmHome frmHome = FrmHome.InstanciarVentanaUnica(this);
             frmHome.MdiParent = this;
             frmHome.Show();
             frmHome.BringToFront();

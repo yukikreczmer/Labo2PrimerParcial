@@ -51,7 +51,7 @@
             this.btnBajarProducto.Name = "btnBajarProducto";
             this.btnBajarProducto.Size = new System.Drawing.Size(120, 52);
             this.btnBajarProducto.TabIndex = 22;
-            this.btnBajarProducto.Text = "Bajar";
+            this.btnBajarProducto.Text = "Bajar Producto";
             this.btnBajarProducto.UseVisualStyleBackColor = true;
             this.btnBajarProducto.Click += new System.EventHandler(this.btnBajarProducto_Click);
             // 
@@ -61,7 +61,7 @@
             this.btnModificarProducto.Name = "btnModificarProducto";
             this.btnModificarProducto.Size = new System.Drawing.Size(120, 52);
             this.btnModificarProducto.TabIndex = 21;
-            this.btnModificarProducto.Text = "Modificar";
+            this.btnModificarProducto.Text = "Modificar Producto";
             this.btnModificarProducto.UseVisualStyleBackColor = true;
             this.btnModificarProducto.Click += new System.EventHandler(this.btnModificarProducto_Click);
             // 
@@ -71,7 +71,7 @@
             this.btnAgregarProducto.Name = "btnAgregarProducto";
             this.btnAgregarProducto.Size = new System.Drawing.Size(120, 52);
             this.btnAgregarProducto.TabIndex = 20;
-            this.btnAgregarProducto.Text = "Agregar";
+            this.btnAgregarProducto.Text = "Agregar Producto";
             this.btnAgregarProducto.UseVisualStyleBackColor = true;
             this.btnAgregarProducto.Click += new System.EventHandler(this.btnAgregarProducto_Click);
             // 

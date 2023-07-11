@@ -41,14 +41,16 @@ namespace UI
             int posicion = dgvProductos.CurrentRow.Index;
             txbNombre.Text = dgvProductos[0, posicion].Value.ToString();
             txbPrecio.Text = dgvProductos[1, posicion].Value.ToString();
-            txbStock.Text = dgvProductos[2, posicion].Value.ToString();
+            txbStock.Text = dgvProductos[3, posicion].Value.ToString();
         }
 
         private void btnAgregarProducto_Click(object sender, EventArgs e)
         {
             try
             {
-                Producto.AgregarProducto(txbNombre.Text,txbPrecio.Text,txbStock.Text);
+                Producto productoAAgregar = Producto.AgregarProducto(txbNombre.Text, txbPrecio.Text, txbStock.Text);
+                _frmMenuPrincipal.logInformes.InformarEnLog(productoAAgregar, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnAgregarProducto.Text);
+
                 ActualizarCambioRealizado();                
             }catch(Exception ex)
             {
@@ -76,6 +78,7 @@ namespace UI
             try
             {
                 productoAModificar.ModificarProducto(txbNombre.Text, txbPrecio.Text, txbStock.Text);
+                _frmMenuPrincipal.logInformes.InformarEnLog(productoAModificar, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnModificarProducto.Text);
                 ActualizarCambioRealizado();
             }
             catch (Exception ex)
@@ -94,6 +97,8 @@ namespace UI
             if(result == DialogResult.Yes)
             {
                 Producto.BajarProducto(productoABajar);
+                _frmMenuPrincipal.logInformes.InformarEnLog(productoABajar, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnBajarProducto.Text);
+
                 ActualizarCambioRealizado();
             }
         }

@@ -38,11 +38,13 @@ namespace UI
 
         private void btnAgregarUsuario_Click(object sender, EventArgs e)
         {
+            Usuario usuarioAAgregar;
             try
             {
-                Usuario.AgregarUsuario(txbApellido.Text, txbNombre.Text, txbDni.Text, txbNombreUsuario.Text, txbContrasenia.Text, txbContraseniaRepetida.Text, chbSuperUsuario.Checked);
-                ActualizarCambioRealizado();
+                usuarioAAgregar = Usuario.AgregarUsuario(txbApellido.Text, txbNombre.Text, txbDni.Text, txbNombreUsuario.Text, txbContrasenia.Text, txbContraseniaRepetida.Text, chbSuperUsuario.Checked);
+                _frmMenuPrincipal.logInformes.InformarEnLog(usuarioAAgregar, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnAgregarUsuario.Text);
 
+                ActualizarCambioRealizado();
             }
             catch (Exception ex)
             {
@@ -67,6 +69,8 @@ namespace UI
                 if(usuarioAModificar != null)
                 {                    
                     usuarioAModificar.ModificarUsuario(txbApellido.Text, txbNombre.Text, dni, txbNombreUsuario.Text, txbContrasenia.Text, rol);
+                    _frmMenuPrincipal.logInformes.InformarEnLog(usuarioAModificar, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnModificarUsuario.Text);
+
                     ActualizarCambioRealizado();
                 }
             }
@@ -87,6 +91,7 @@ namespace UI
             if (result == DialogResult.Yes)
             {
                 Usuario.BajarUsuario(usuarioABajar);
+                _frmMenuPrincipal.logInformes.InformarEnLog(usuarioABajar, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnBajarUsuario.Text);
                 ActualizarCambioRealizado();
             }
          }

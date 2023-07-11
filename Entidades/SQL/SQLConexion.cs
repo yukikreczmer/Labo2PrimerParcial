@@ -8,16 +8,41 @@ using System.Net;
 
 namespace Entidades.SQL
 {
-    public class Conexion
+    public abstract class SQLConexion
     {
+        private SqlConnection connection;
+        private static string _connectionString;        
+        string pathRelativoConnectionStrings = "connectionStrings.txt";
+        static List<string> _connectionStringsList = new List<string>();
+
+        protected SqlConnection Connection { get => connection; set => connection = value; }
+
+        public SQLConexion(string connectionString)
+        {            
+            _connectionStringsList = Archivo.LeerArchivo(pathRelativoConnectionStrings);
+            if(connectionString == ConnectionStrings.local.ToString())
+            _connectionString = _connectionStringsList.ElementAt(0);
+        }
+
+        public void Abrir()
+        {
+            Connection = new SqlConnection(_connectionString);
+            Connection.Open();
+        }
+
+        public void Cerrar()
+        {
+            Connection.Close();
+        }
+
         //la idea es no hacerla estatica sino con objeto y poder reutilizarlo
         //quizas le podes pasar el string connection o el server y nombre de db y que no se maneje estatico y con 1 sola instancia, que en algun momento puede traer errores
-        
+        /*
         private static SqlConnection _connection;
         private static SqlCommand _command;
         private static string _connectionString;
 
-        static Conexion()
+        static SQLConexion()
         {
             _connectionString = @"Server=.;Database=Parcial2Labo2;Trusted_Connection=True;";
             _connection = new SqlConnection(_connectionString);
@@ -26,7 +51,7 @@ namespace Entidades.SQL
             _command.CommandType = System.Data.CommandType.Text;            
         }
 
-        public static void Leer()
+        public static void LeerUsuarios()
         {
             try
             {
@@ -49,7 +74,6 @@ namespace Entidades.SQL
                          Enum.TryParse(dataReader.GetString(4).Trim(), out Roles rol);
                          contrasenia = dataReader.GetString(5).Trim();
                          Usuario.AgregarUsuario(apellido, nombre, dni, nombreUsuario, contrasenia, contrasenia, rol.ToString() == "superUsuario");
-
                     }
                 }
             }
@@ -79,9 +103,7 @@ namespace Entidades.SQL
                 _connection.Close();
             }
         }
-
-
-
+        */
 
 
     }
