@@ -97,5 +97,6 @@ namespace UI
             dgvProductosGenerales.DataSource = null;
             dgvProductosGenerales.DataSource = listaFiltradaProductos;
         }
+
     }
 }

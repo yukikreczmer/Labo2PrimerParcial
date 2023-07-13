@@ -43,16 +43,7 @@ namespace UI
             ActualizarColorBoton(btnMesa4, Mesa.listaMesas[3].Estado);
             ActualizarColorBoton(btnMesa5, Mesa.listaMesas[4].Estado);
             ActualizarColorBoton(btnMesa6, Mesa.listaMesas[5].Estado);
-            //Producto.CargarProductos();
-            try
-            {
-                ProductoDB ProductoDB = new ProductoDB(ConnectionStrings.local.ToString());
-                Producto.productos = ProductoDB.TraerListaParser();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }           
+            //Producto.CargarProductos();       
         }
 
         private void ActualizarColorBoton(Button btn, EstadoMesa estado)

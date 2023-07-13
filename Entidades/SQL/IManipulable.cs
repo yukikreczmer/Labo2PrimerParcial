@@ -8,11 +8,7 @@ namespace Entidades.SQL
 {
     public interface IManipulable<T>
     {
-        public List<T> TraerListaParser();
-        public T Traer(int id);//me trae uno solo
+        public Task<List<Parser>> TraerListaParser();
 
-        public int Agregar(T objeto);
-        public int Modificar(T objeto);
-        public int Eliminar(int id);
     }
 }

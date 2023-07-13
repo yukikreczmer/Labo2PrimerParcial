@@ -1,4 +1,5 @@
 using Entidades;
+using Entidades.SQL;
 
 namespace UI
 {
@@ -11,18 +12,20 @@ namespace UI
             Anchor = AnchorStyles.Right;
         }
 
-        private void FrmLogin_Load(object sender, EventArgs e)
-        {
-            /*
+        private async void FrmLogin_Load(object sender, EventArgs e)
+        {            
             try
             {
-                Usuario.CargarUsuarios();
-
+                UsuarioDB usuarioDB = new UsuarioDB(ConnectionStrings.local.ToString());
+                await usuarioDB.TraerListaParser();
+                
+                ProductoDB productoDB = new ProductoDB(ConnectionStrings.local.ToString());
+                await productoDB.TraerListaParser();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }*/
+            }           
         }
 
         private void btnIngresar_Click(object sender, EventArgs e)

@@ -1,4 +1,5 @@
 ﻿using Entidades;
+using Entidades.SQL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -44,6 +45,9 @@ namespace UI
                 usuarioAAgregar = Usuario.AgregarUsuario(txbApellido.Text, txbNombre.Text, txbDni.Text, txbNombreUsuario.Text, txbContrasenia.Text, txbContraseniaRepetida.Text, chbSuperUsuario.Checked);
                 _frmMenuPrincipal.logInformes.InformarEnLog(usuarioAAgregar, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnAgregarUsuario.Text);
 
+                UsuarioDB usuarioDB = new UsuarioDB(ConnectionStrings.local.ToString());
+                usuarioDB.AgregarAsync(usuarioAAgregar);
+
                 ActualizarCambioRealizado();
             }
             catch (Exception ex)
@@ -70,6 +74,8 @@ namespace UI
                 {                    
                     usuarioAModificar.ModificarUsuario(txbApellido.Text, txbNombre.Text, dni, txbNombreUsuario.Text, txbContrasenia.Text, rol);
                     _frmMenuPrincipal.logInformes.InformarEnLog(usuarioAModificar, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnModificarUsuario.Text);
+                    UsuarioDB usuarioDB = new UsuarioDB(ConnectionStrings.local.ToString());
+                    usuarioDB.ModificarAsync(usuarioAModificar);
 
                     ActualizarCambioRealizado();
                 }
@@ -92,6 +98,9 @@ namespace UI
             {
                 Usuario.BajarUsuario(usuarioABajar);
                 _frmMenuPrincipal.logInformes.InformarEnLog(usuarioABajar, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnBajarUsuario.Text);
+                UsuarioDB usuarioDB = new UsuarioDB(ConnectionStrings.local.ToString());
+                usuarioDB.EliminarAsync(usuarioABajar.NombreUsuario);
+
                 ActualizarCambioRealizado();
             }
          }

@@ -10,12 +10,12 @@ namespace Entidades.SQL
 {
     public abstract class SQLConexion
     {
-        private SqlConnection connection;
+        private SqlConnection _connection;
         private static string _connectionString;        
         string pathRelativoConnectionStrings = "connectionStrings.txt";
         static List<string> _connectionStringsList = new List<string>();
 
-        protected SqlConnection Connection { get => connection; set => connection = value; }
+        protected SqlConnection Connection { get => _connection; set => _connection = value; }
 
         public SQLConexion(string connectionString)
         {            
@@ -24,10 +24,10 @@ namespace Entidades.SQL
             _connectionString = _connectionStringsList.ElementAt(0);
         }
 
-        public void Abrir()
+        protected async Task AbrirAsync()
         {
             Connection = new SqlConnection(_connectionString);
-            Connection.Open();
+            await Connection.OpenAsync();
         }
 
         public void Cerrar()

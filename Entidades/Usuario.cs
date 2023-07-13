@@ -25,6 +25,7 @@ namespace Entidades
         public string Nombre { get => _nombre!; set => _nombre = value; }
         public int Dni { get => _dni; set => _dni = value; }
         public string NombreUsuario { get => _nombreUsuario!; set => _nombreUsuario = value; }
+        public string Contrasenia { get => _contrasenia!;}
         public Roles Rol { get => _rol; set => _rol = value; }
 
         public Usuario(string _apellido, string _nombre, int _dni, string _nombreUsuario, string _contrasenia, Roles _rol)

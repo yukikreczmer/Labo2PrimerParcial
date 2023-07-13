@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -14,13 +15,14 @@ namespace Entidades.SQL
         {
         }
 
-        public DataTable EjecutarConsulta(string consulta)
+        public async Task<DataTable> EjecutarConsultaAsync(SqlCommand command)
         {
-            Abrir();
+            await AbrirAsync();
             
-            SqlCommand command = new SqlCommand(consulta, Connection);
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = await command.ExecuteReaderAsync();
+
             var dataTable = new DataTable();
+
             dataTable.Load(reader);
 
             reader.Close();
@@ -28,7 +30,18 @@ namespace Entidades.SQL
 
             return dataTable;
         }
-        //execute non query nos trae la cantidad de filas afectadas. Usar para abm
+
+        public async Task<SqlCommand> CrearComandoAsync(string consulta)
+        {
+            await AbrirAsync();
+            SqlCommand comando = new SqlCommand(consulta, Connection);
+            return comando;
+        }
+
+        public async Task EjecutarNonQueryAsync(SqlCommand consulta)
+        {
+            await consulta.ExecuteNonQueryAsync();
+        }
 
     }
 }

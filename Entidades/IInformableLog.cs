@@ -8,7 +8,7 @@ namespace Entidades
 {
     public interface IInformableLog
     {
-        private static string _fileName = "informes.txt";
+        private static string _fileName = "logs.txt";
 
         static string FileName { get => _fileName; }
 

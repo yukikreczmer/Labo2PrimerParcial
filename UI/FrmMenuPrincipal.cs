@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -62,6 +63,8 @@ namespace UI
                 {
                     Archivo.GuardarDatos(Usuario.pathRelativoUsuarios, Usuario.usuarios);
                     Archivo.GuardarDatos(Producto.pathRelativoProductos, Producto.productos);
+
+
                 }
 
             }
@@ -96,6 +99,27 @@ namespace UI
             hayCambios = false;
             Archivo.GuardarDatos(Usuario.pathRelativoUsuarios, Usuario.usuarios);
             Archivo.GuardarDatos(Producto.pathRelativoProductos, Producto.productos);
+        }
+
+        private void jSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string usuariosJSON;
+            usuariosJSON = ExportadorJSON.SerializarListaToJson(Usuario.VerListaComoUsuarios());
+            Archivo.GuardarDatos("UsuariosJSON.json", usuariosJSON);
+
+            string productosJSON;
+            productosJSON = ExportadorJSON.SerializarListaToJson(Producto.VerListaComoProductos());
+            Archivo.GuardarDatos("ProductosJSON.json", productosJSON);
+        }
+
+        private void cSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string ProductosCSV = ExportadorCSV.GenerarContenidoCSV(Usuario.VerListaComoUsuarios());
+            Archivo.GuardarDatos("ProductosCSV.csv", ProductosCSV);
+
+            string UsuariosCSV = ExportadorCSV.GenerarContenidoCSV(Usuario.usuarios);
+            Archivo.GuardarDatos("UsuariosCSV.csv", UsuariosCSV);         
+
         }
     }
 }

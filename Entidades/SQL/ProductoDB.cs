@@ -13,47 +13,73 @@ namespace Entidades.SQL
         {
         }
 
-        public int Agregar(Parser objeto)
+        public async Task AgregarAsync(Producto producto)
         {
-            throw new NotImplementedException();
-        }
+            string consulta = "INSERT INTO productos (nombre, precio, id, stock) VALUES (@nombre, @precio, @id, @stock)";
 
-        public int Eliminar(int id)
-        {
-            throw new NotImplementedException();
-        }
+            using (var comando = await CrearComandoAsync(consulta))
+            {                
+                comando.Parameters.AddWithValue("@nombre", producto.Nombre);
+                comando.Parameters.AddWithValue("@precio", producto.Precio);
+                comando.Parameters.AddWithValue("@id", producto.Id);
+                comando.Parameters.AddWithValue("@stock", producto.Stock);
 
-        public int Modificar(Parser objeto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Parser Traer(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Parser> TraerListaParser()
-        {
-            using (DataTable dataTable = EjecutarConsulta("SELECT * FROM productos"))
-            {
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    string nombre;
-                    decimal precio;
-                    int id;
-                    int stock;
-                    
-                    nombre = row["nombre"].ToString().Trim();
-                    decimal.TryParse(row["precio"].ToString().Trim(), out precio);
-                    int.TryParse(row["id"].ToString().Trim(), out id);
-                    int.TryParse(row["stock"].ToString().Trim(), out stock);
-
-                    Producto producto = new(nombre, precio, id, stock);
-                    Producto.productos.Add(producto);
-                }
+                await EjecutarNonQueryAsync(comando);
             }
-            return Producto.productos;
+        }
+
+        public async Task EliminarAsync(int id)
+        {
+            string consulta = "DELETE FROM productos where id = @id";
+            using (var comando = await CrearComandoAsync(consulta))
+            {
+                comando.Parameters.AddWithValue("@id", id);
+                await EjecutarNonQueryAsync(comando);
+            }
+        }
+
+        public async Task ModificarAsync(Producto producto)
+        {
+            string consulta = "UPDATE productos SET nombre = @nombre, precio = @precio, id = @id, stock = @stock WHERE id = @id";
+           
+            using (var comando = await CrearComandoAsync(consulta))
+            {
+                comando.Parameters.AddWithValue("@nombre", producto.Nombre);
+                comando.Parameters.AddWithValue("@precio", producto.Precio);
+                comando.Parameters.AddWithValue("@id", producto.Id);
+                comando.Parameters.AddWithValue("@stock", producto.Stock);
+
+                await EjecutarNonQueryAsync(comando);
+            }
+        }
+
+
+        public async Task<List<Parser>> TraerListaParser()
+        {
+            string consulta = "SELECT * FROM productos;";
+            using (var comando =  await CrearComandoAsync(consulta))
+            {
+                using (var dataTable = await EjecutarConsultaAsync(comando))
+                {
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        string nombre;
+                        decimal precio;
+                        int id;
+                        int stock;
+
+                        nombre = row["nombre"].ToString().Trim();
+                        decimal.TryParse(row["precio"].ToString().Trim(), out precio);
+                        int.TryParse(row["id"].ToString().Trim(), out id);
+                        int.TryParse(row["stock"].ToString().Trim(), out stock);
+
+                        Producto producto = new(nombre, precio, id, stock);
+                        Producto.productos.Add(producto);
+                    }
+                }
+                return Producto.productos;
+            }
+               
         }
     }
 }

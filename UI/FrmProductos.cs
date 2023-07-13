@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Entidades.SQL;
 
 namespace UI
 {
@@ -50,6 +51,9 @@ namespace UI
             {
                 Producto productoAAgregar = Producto.AgregarProducto(txbNombre.Text, txbPrecio.Text, txbStock.Text);
                 _frmMenuPrincipal.logInformes.InformarEnLog(productoAAgregar, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnAgregarProducto.Text);
+                
+                ProductoDB productoDB = new ProductoDB(ConnectionStrings.local.ToString());
+                productoDB.AgregarAsync(productoAAgregar);
 
                 ActualizarCambioRealizado();                
             }catch(Exception ex)
@@ -79,6 +83,10 @@ namespace UI
             {
                 productoAModificar.ModificarProducto(txbNombre.Text, txbPrecio.Text, txbStock.Text);
                 _frmMenuPrincipal.logInformes.InformarEnLog(productoAModificar, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnModificarProducto.Text);
+                
+                ProductoDB productoDB = new ProductoDB(ConnectionStrings.local.ToString());
+                productoDB.ModificarAsync(productoAModificar);
+
                 ActualizarCambioRealizado();
             }
             catch (Exception ex)
@@ -98,6 +106,9 @@ namespace UI
             {
                 Producto.BajarProducto(productoABajar);
                 _frmMenuPrincipal.logInformes.InformarEnLog(productoABajar, _frmMenuPrincipal.UsuarioLogueado.NombreUsuario, btnBajarProducto.Text);
+
+                ProductoDB productoDB = new ProductoDB(ConnectionStrings.local.ToString());
+                productoDB.EliminarAsync(productoABajar.Id);
 
                 ActualizarCambioRealizado();
             }
